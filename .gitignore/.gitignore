@@ -31,4 +31,5 @@
 *.out
 *.app
 
-TP3_Autoroute
+TP3_Autoroute/
+ApplicationWin32/
