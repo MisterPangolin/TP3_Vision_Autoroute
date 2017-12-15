@@ -94,7 +94,7 @@ int main(int argc, const char * argv[]) {
 	}
 
 
-   if ((key == ESC_KEY) && (key == Q_KEY)) {
+   if ((key == ESC_KEY) || (key == Q_KEY)) {
 	   cout << "Processus interrompu";
 	   return EXIT_SUCCESS;
    }

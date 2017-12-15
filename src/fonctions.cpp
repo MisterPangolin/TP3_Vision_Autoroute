@@ -29,6 +29,7 @@ Mat mask_route(int M, vector<Mat> Video, Mat imgMoy, int hauteur, int largeur) {
 				int min = imgMoy.at<uchar>(i, j) - 15; // variation maxmale que l'on tolère pour définir la route
 				int valeur = Video[k].at<uchar>(i, j); // valeur de nuance de gris de la photo
 				if (valeur < max && valeur > min) {
+
 					Noir = 1;
 				}
 				if (Noir == 1) {
@@ -59,5 +60,4 @@ bool extraction(int M, vector<Mat> &Video, Mat mask) {
 
 bool extraction(vector<Mat> &Video, Mat mask) {
 	return extraction(Video.size(), Video, mask);
-
 }
