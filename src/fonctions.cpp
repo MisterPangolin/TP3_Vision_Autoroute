@@ -32,5 +32,5 @@ bool extraction(int M, vector<Mat> &Video, Mat mask) {
 }
 
 bool extraction(vector<Mat> &Video, Mat mask) {
-	return extraction(Video.size, Video, mask);
+	return extraction(Video.size(), Video, mask);
 }
