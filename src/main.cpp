@@ -15,6 +15,8 @@
 // no idea why on the virtual box the keycode is completely wrong
 #define ESC_KEY 27  // virtual : 1048603 // should be 27
 #define Q_KEY 	113 // virtual : 1048689 // should be 113
+#define O_KEY	111
+#define N_KEY	110
 
 using namespace std;
 using namespace cv;
@@ -32,6 +34,8 @@ Mat immoy; // Image moyenne en niveau de gris
 Mat masque; // masque de la route
 int M = 500; // Nombre d'image pour le calcul de la moyenne
 
+int key = 0;
+
 
 int main(int argc, const char * argv[]) {
    
@@ -42,7 +46,6 @@ int main(int argc, const char * argv[]) {
 	else {
 		videoName = "video.avi";
 	}
-
 
 	// Reading the image (and forcing it to grayscale)	   
 	cap.open(videoName);
@@ -68,13 +71,32 @@ int main(int argc, const char * argv[]) {
 		return EXIT_FAILURE ;
 	}
 	
+////////////////////// I/O //////////////////////////
+	cout << endl << "Charger une image moyenne deja calculee ? (O/N)" << endl;
+	key = waitKey(0);
+	if (key == O_KEY) {
+		cout << "Indiquer le chemin et le nom de l'image :" << endl;
+		string chemin;
+		cin >> chemin;
+		immoy = imread(chemin, CV_LOAD_IMAGE_GRAYSCALE);
+	}
+
+	cout << endl << "Charger un masque deja calcule ? (O/N)" << endl;
+	key = waitKey(0);
+	if (key == O_KEY) {
+		cout << "Indiquer le chemin et le nom de l'image :" << endl;
+		string chemin;
+		cin >> chemin;
+		immoy = imread(chemin, CV_LOAD_IMAGE_GRAYSCALE);
+	}
+
+
 
 ////////////////// ENREGISTREMENT DES IMAGES DANS LES VECTEURS ////////////////////   
 
 	cout << endl << "Calcul de l'image moyenne..." << endl ;
 
 	//Boucle de lecture et enregistrement de la vidéo et calcul de l'image moyenne 
-   int key = 0;
    int Count = 0; // compteur d'images
    while ( (key != ESC_KEY) && (key!= Q_KEY) && (Count < nbFrames) ) {
 
@@ -85,7 +107,7 @@ int main(int argc, const char * argv[]) {
 	  cvtColor(im, imGray, CV_BGR2GRAY); // passage en nuances de Gris
 	  ImagesG.push_back(imGray.clone()); // enregistrement du vecteurs d'images en nuances de gris
 
-	  if (Count == M) { // on ne calcule l'image moyenne qu'une fois le nombre d'image nécessaire atteint ... merci Captain O
+	  if (Count == M && immoy.empty()) { // on ne calcule l'image moyenne qu'une fois le nombre d'image nécessaire atteint ... merci Captain O
 		  immoy = ImageMoyenne(M, ImagesG, Hauteur, Largeur);
 		  namedWindow("Image Moyenne");
 		  imshow("Image Moyenne", immoy);
@@ -101,13 +123,27 @@ int main(int argc, const char * argv[]) {
 
 
    /////////////////////////////////// PROCESS //////////////////////////////////////////////
+
    cout << "calcul du masque en cours ..." << endl;
    masque = mask_route(M, ImagesG, immoy, Hauteur, Largeur);
    cout << "calcul du masque terminé ..." << endl;
 
+   namedWindow("masque");
+   imshow("masque", masque);
+
+   cout << endl << "Appliquer un traitement au masque ? (O/N)" << endl;
+   key = waitKey(0);
+
+   if (key == O_KEY) {
+	   cout << endl << "Traitement du masque..." << endl;
+	   morpho(masque, MORPH_CLOSE, 3);
+	   morpho(masque, MORPH_OPEN, 4);
+	   cout << endl << "Traitement terminé." << endl;
+	   imshow("masque", masque);
+   }
 
 
-
+   
 
 
 
@@ -117,7 +153,6 @@ int main(int argc, const char * argv[]) {
    // Creating a window to display some images
    namedWindow("Original video");
    namedWindow("Gray video");
-   namedWindow("masque");
 
    Count = 0;
    // Waiting for the user to press ESCAPE before exiting the application	
@@ -125,7 +160,6 @@ int main(int argc, const char * argv[]) {
 	
 	   imshow("Original video", Images[Count]);
 	   imshow("Gray video", ImagesG[Count]);
-	   imshow("masque", masque);
 
 	   key = waitKey( 1000/fps ); // video is XXfps
 	   //key = waitKey(-3);
@@ -135,6 +169,24 @@ int main(int argc, const char * argv[]) {
 
    // Destroying all OpenCV windows
 	destroyAllWindows();
+
+	cout << endl << "Enregistrer l'image moyenne calculée ? (O/N)" << endl;
+	key = waitKey(0);
+	if (key == O_KEY) {
+		cout << "Indiquer le chemin et le nom de l'image :" << endl;
+		string chemin;
+		cin >> chemin;
+		imwrite(chemin, immoy);
+	}
+
+	cout << endl << "Enregistrer le masque calculé ? (O/N)" << endl;
+	key = waitKey(0);
+	if (key == O_KEY) {
+		cout << "Indiquer le chemin et le nom de l'image :" << endl;
+		string chemin;
+		cin >> chemin;
+		imwrite(chemin, masque);
+	}
    
-	return 0;
+	return EXIT_SUCCESS;
 }

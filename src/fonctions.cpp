@@ -61,3 +61,8 @@ bool extraction(int M, vector<Mat> &Video, Mat mask) {
 bool extraction(vector<Mat> &Video, Mat mask) {
 	return extraction(Video.size(), Video, mask);
 }
+
+void morpho(Mat img, int morphoType, int element_size){
+	Mat kernel = getStructuringElement(MORPH_CROSS, Size(element_size, element_size));
+	morphologyEx(img, img, morphoType, kernel);
+}
