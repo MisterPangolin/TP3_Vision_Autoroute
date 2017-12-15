@@ -18,6 +18,7 @@ Mat ImageMoyenne(int M, vector<Mat> Video, int hauteur, int largeur) {
 	return ImageMoy;
 }
 
+
 Mat mask_route(int M, vector<Mat> Video, Mat imgMoy, int hauteur, int largeur) {
 	Mat mask = Mat(hauteur, largeur, CV_8U);
 	for (int i = 0; i < hauteur; i++) {// parcours des pixels en hauteur
@@ -41,4 +42,21 @@ Mat mask_route(int M, vector<Mat> Video, Mat imgMoy, int hauteur, int largeur) {
 		}
 	}
 	return mask;
+
+bool extraction(int M, vector<Mat> &Video, Mat mask) {
+	
+	if (mask.size != Video[0].size) {
+		return false;
+	}
+
+	for (int i = 0; i < M; i++) {
+		Video[i].copyTo(Video[i], mask);
+	}
+
+	return true;
+}
+
+bool extraction(vector<Mat> &Video, Mat mask) {
+	return extraction(Video.size, Video, mask);
+
 }
