@@ -29,7 +29,8 @@ Mat imGray;
 vector<Mat> Images;
 vector<Mat> ImagesG;
 Mat immoy; // Image moyenne en niveau de gris
-int M = 200; // Nombre d'image pour le calcul de la moyenne
+Mat masque; // masque de la route
+int M = 300; // Nombre d'image pour le calcul de la moyenne
 
 
 int main(int argc, const char * argv[]) {
@@ -100,9 +101,9 @@ int main(int argc, const char * argv[]) {
 
 
    /////////////////////////////////// PROCESS //////////////////////////////////////////////
-
-
-
+   cout << "calcul du masque en cours ..." << endl;
+   masque = mask_route(M, ImagesG, immoy, Hauteur, Largeur);
+   cout << "calcul du masque terminé ..." << endl;
 
 
 
@@ -116,6 +117,7 @@ int main(int argc, const char * argv[]) {
    // Creating a window to display some images
    namedWindow("Original video");
    namedWindow("Gray video");
+   namedWindow("masque");
 
    Count = 0;
    // Waiting for the user to press ESCAPE before exiting the application	
@@ -123,6 +125,7 @@ int main(int argc, const char * argv[]) {
 	
 	   imshow("Original video", Images[Count]);
 	   imshow("Gray video", ImagesG[Count]);
+	   imshow("masque", masque);
 
 	   key = waitKey( 1000/fps ); // video is XXfps
 	   //key = waitKey(-3);
