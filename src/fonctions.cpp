@@ -27,11 +27,11 @@ Mat mask_route(int M, vector<Mat> Video, Mat imgMoy, int hauteur, int largeur) {
 			for (int k = 0; k < M; M++) {// parcours de chaques images
 				int max = imgMoy.at<uchar>(i, j) + 5; // variation minimale que l'on tolère pour définir la route
 				int min = imgMoy.at<uchar>(i, j) - 5; // variation maxmale que l'on tolère pour définir la route
-				int valeur =  Video[k].at<uchar>(i, j); // valeur de nuance de gris de la photo
+				int valeur = Video[k].at<uchar>(i, j); // valeur de nuance de gris de la photo
 				if (valeur < max || valeur > min) {
 					Noir = 1;
 				}
-				if (Noir == 1){
+				if (Noir == 1) {
 					mask.at<uchar>(i, j) = 0;
 				}
 				else {
@@ -42,6 +42,7 @@ Mat mask_route(int M, vector<Mat> Video, Mat imgMoy, int hauteur, int largeur) {
 		}
 	}
 	return mask;
+}
 
 bool extraction(int M, vector<Mat> &Video, Mat mask) {
 	
@@ -57,10 +58,5 @@ bool extraction(int M, vector<Mat> &Video, Mat mask) {
 }
 
 bool extraction(vector<Mat> &Video, Mat mask) {
-<<<<<<< HEAD
-	return extraction(Video.size, Video, mask);
-
-=======
 	return extraction(Video.size(), Video, mask);
->>>>>>> 55c16493dffbc00994fdcfe34d6b98ede819f016
 }
