@@ -10,3 +10,6 @@ using namespace cv;
 
 Mat ImageMoyenne(int M, vector<Mat> Video, int hauteur, int largeur);
 // Renvoie l'image moyenne des M premières images d'une video Video (sous forme de vecteur de Mat), de dimensions hauteur x largeur.
+
+Mat mask_route(vector<Mat> Video, Mat imgMoy);
+// Renvoie le mask
