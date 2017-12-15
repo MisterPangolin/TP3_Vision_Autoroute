@@ -17,3 +17,28 @@ Mat ImageMoyenne(int M, vector<Mat> Video, int hauteur, int largeur) {
 	}
 	return ImageMoy;
 }
+
+Mat mask_route(int M, vector<Mat> Video, Mat imgMoy, int hauteur, int largeur) {
+	Mat mask = Mat(hauteur, largeur, CV_8U);
+	for (int i = 0; i < hauteur; i++) {// parcours des pixels en hauteur
+		for (int j = 0; j < largeur; j++) {// parcour des pixels en largeur
+			bool Noir = 0;// booléen servant a définir si un pixel appartiens au décor ou non  
+			for (int k = 0; k < M; M++) {// parcours de chaques images
+				int max = imgMoy.at<uchar>(i, j) + 5; // variation minimale que l'on tolère pour définir la route
+				int min = imgMoy.at<uchar>(i, j) - 5; // variation maxmale que l'on tolère pour définir la route
+				int valeur =  Video[k].at<uchar>(i, j); // valeur de nuance de gris de la photo
+				if (valeur < max || valeur > min) {
+					Noir = 1;
+				}
+				if (Noir == 1){
+					mask.at<uchar>(i, j) = 0;
+				}
+				else {
+					mask.at<uchar>(i, j) = 255;
+				}
+				Noir = 0;
+			}
+		}
+	}
+	return mask;
+}
