@@ -30,7 +30,7 @@ vector<Mat> Images;
 vector<Mat> ImagesG;
 Mat immoy; // Image moyenne en niveau de gris
 Mat masque; // masque de la route
-int M = 300; // Nombre d'image pour le calcul de la moyenne
+int M = 500; // Nombre d'image pour le calcul de la moyenne
 
 
 int main(int argc, const char * argv[]) {
