@@ -13,3 +13,13 @@ Mat ImageMoyenne(int M, vector<Mat> Video, int hauteur, int largeur);
 
 Mat mask_route(vector<Mat> Video, Mat imgMoy);
 // Renvoie le mask
+
+bool extraction(int M, vector<Mat> &Video, Mat mask);
+// Cette fonction modifie la Video passée en paramètre pour extraire la partie non masquée par le mask.
+// Renvoie true si tout se passe bien, false sinon (par exemple si le mask et la video ne sont pas de même dimension)
+// M est le nombre d'images sur lequel le mask aura été appliqué (en partant de la première image)
+
+bool extraction(vector<Mat> &Video, Mat mask);
+// Surcharge de la fonction extraction :
+// Sert à appliquer le mask sur toutes les images de
+// la video (M = size(Video) )

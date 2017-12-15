@@ -17,3 +17,20 @@ Mat ImageMoyenne(int M, vector<Mat> Video, int hauteur, int largeur) {
 	}
 	return ImageMoy;
 }
+
+bool extraction(int M, vector<Mat> &Video, Mat mask) {
+	
+	if (mask.size != Video[0].size) {
+		return false;
+	}
+
+	for (int i = 0; i < M; i++) {
+		Video[i].copyTo(Video[i], mask);
+	}
+
+	return true;
+}
+
+bool extraction(vector<Mat> &Video, Mat mask) {
+	return extraction(Video.size, Video, mask);
+}
