@@ -25,3 +25,5 @@ bool extraction(vector<Mat> &Video, Mat mask);
 // Sert à appliquer le mask sur toutes les images de
 // la video (M = size(Video) )
 
+void morpho(Mat img, int morphoType, int element_size);
+// Applique une morphologie au mask
