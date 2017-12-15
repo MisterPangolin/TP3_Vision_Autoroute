@@ -57,6 +57,10 @@ bool extraction(int M, vector<Mat> &Video, Mat mask) {
 }
 
 bool extraction(vector<Mat> &Video, Mat mask) {
+<<<<<<< HEAD
 	return extraction(Video.size, Video, mask);
 
+=======
+	return extraction(Video.size(), Video, mask);
+>>>>>>> 55c16493dffbc00994fdcfe34d6b98ede819f016
 }
