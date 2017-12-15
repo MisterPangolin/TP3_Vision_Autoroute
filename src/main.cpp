@@ -39,7 +39,7 @@ int main(int argc, const char * argv[]) {
 		cout <<"video name: "<<videoName<<endl;
 	}
 	else {
-		videoName = "video.avi.wm";
+		videoName = "video.avi";
 	}
 
 
