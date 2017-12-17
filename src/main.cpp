@@ -12,12 +12,6 @@
 
 #include "fonctions.h"
 
-// no idea why on the virtual box the keycode is completely wrong
-#define ESC_KEY 27  // virtual : 1048603 // should be 27
-#define Q_KEY 	113 // virtual : 1048689 // should be 113
-#define O_KEY	111
-#define N_KEY	110
-
 using namespace std;
 using namespace cv;
 
@@ -150,25 +144,13 @@ int main(int argc, const char * argv[]) {
 
    ///////////////////////////////////// PLAY VIDEO //////////////////////////////////////////
 
-   // Creating a window to display some images
-   namedWindow("Original video");
-   namedWindow("Gray video");
-
-   Count = 0;
-   // Waiting for the user to press ESCAPE before exiting the application	
-   while ((key != ESC_KEY) && (key != Q_KEY) && (Count < nbFrames) ) {
-	
-	   imshow("Original video", Images[Count]);
-	   imshow("Gray video", ImagesG[Count]);
-
-	   key = waitKey( 1000/fps ); // video is XXfps
-	   //key = waitKey(-3);
-	   Count += 1;
+   cout << endl << "Lire la vidéo ? (O/N)" << endl;
+   key = waitKey(0);
+   if (key == O_KEY) {
+	   playVideo(fps, Images, ImagesG);
    }
-   
 
-   // Destroying all OpenCV windows
-	destroyAllWindows();
+ /////////////////////////////////////// WRITE IMAGES ///////////////////////////////////
 
 	cout << endl << "Enregistrer l'image moyenne calculée ? (O/N)" << endl;
 	key = waitKey(0);
@@ -187,6 +169,9 @@ int main(int argc, const char * argv[]) {
 		cin >> chemin;
 		imwrite(chemin, masque);
 	}
-   
+ 
+	// Destroying all OpenCV windows
+	destroyAllWindows();
+
 	return EXIT_SUCCESS;
 }

@@ -3,6 +3,12 @@
 #include <opencv/cv.hpp>
 #include <Vector>
 
+// no idea why on the virtual box the keycode is completely wrong
+#define ESC_KEY 27  // virtual : 1048603 // should be 27
+#define Q_KEY 	113 // virtual : 1048689 // should be 113
+#define O_KEY	111
+#define N_KEY	110
+
 using namespace std;
 using namespace cv;
 
@@ -27,3 +33,7 @@ bool extraction(vector<Mat> &Video, Mat mask);
 
 void morpho(Mat img, int morphoType, int element_size);
 // Applique une morphologie au mask
+
+void playVideo(int fps, vector<Mat> Video, vector<Mat> VideoGray);
+// Lit la vidéo Video à un taux de fps images par secondes,
+// et lit la vidéo VideoGray si elle est fournie

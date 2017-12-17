@@ -66,3 +66,29 @@ void morpho(Mat img, int morphoType, int element_size){
 	Mat kernel = getStructuringElement(MORPH_CROSS, Size(element_size, element_size));
 	morphologyEx(img, img, morphoType, kernel);
 }
+
+
+void playVideo(int fps, vector<Mat> Video, vector<Mat> VideoGray = vector<Mat>()) {
+	// Creating a window to display some images
+	namedWindow("Original video");
+	if (!VideoGray.empty()) {
+		namedWindow("Gray video");
+	}
+	
+
+	int Count = 0;
+	int key = 0;
+	int nbFrames = Video.size();
+	// Waiting for the user to press ESCAPE before exiting the application	
+	while ((key != ESC_KEY) && (key != Q_KEY) && (Count < nbFrames)) {
+
+		imshow("Original video", Video[Count]);
+		if (!VideoGray.empty()) {
+			imshow("Gray video", VideoGray[Count]);
+		}
+
+		key = waitKey(1000 / fps); // video is XXfps
+								   //key = waitKey(-3);
+		Count += 1;
+	}
+}
