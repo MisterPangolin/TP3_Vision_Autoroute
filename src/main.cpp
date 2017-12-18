@@ -33,7 +33,7 @@ int key = 0;
 
 int main(int argc, const char * argv[]) {
 
-	namedWindow("Original video");
+	namedWindow("Image Moyenne");
    
 	if(argc > 1) {
 		videoName = argv[1];
@@ -74,8 +74,7 @@ int main(int argc, const char * argv[]) {
 		cout << "Indiquer le chemin et le nom de l'image :" << endl;
 		string chemin;
 		cin >> chemin;
-		immoy = imread(chemin, CV_LOAD_IMAGE_GRAYSCALE);
-		namedWindow("Image Moyenne");
+		immoy = imread(chemin, CV_LOAD_IMAGE_GRAYSCALE);		
 		imshow("Image Moyenne", immoy);
 	}
 
@@ -109,7 +108,6 @@ int main(int argc, const char * argv[]) {
 
 	  if (Count == M && immoy.empty()) { // on ne calcule l'image moyenne qu'une fois le nombre d'image nécessaire atteint ... merci Captain O
 		  immoy = ImageMoyenne(M, ImagesG, Hauteur, Largeur);
-		  namedWindow("Image Moyenne");
 		  imshow("Image Moyenne", immoy);
 	  }
 	Count += 1;
