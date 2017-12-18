@@ -32,12 +32,14 @@ vector<Mat> Images;
 vector<Mat> ImagesG;
 Mat immoy; // Image moyenne en niveau de gris
 Mat masque; // masque de la route
-int M = 500; // Nombre d'image pour le calcul de la moyenne
+int M = 200; // Nombre d'image pour le calcul de la moyenne
 
 int key = 0;
 
 
 int main(int argc, const char * argv[]) {
+
+	namedWindow("Original video");
    
 	if(argc > 1) {
 		videoName = argv[1];
@@ -73,23 +75,27 @@ int main(int argc, const char * argv[]) {
 	
 ////////////////////// I/O //////////////////////////
 	cout << endl << "Charger une image moyenne deja calculee ? (O/N)" << endl;
-	key = waitKey(0);
+	key = waitKey();
 	if (key == O_KEY) {
 		cout << "Indiquer le chemin et le nom de l'image :" << endl;
 		string chemin;
 		cin >> chemin;
 		immoy = imread(chemin, CV_LOAD_IMAGE_GRAYSCALE);
+		namedWindow("Image Moyenne");
+		imshow("Image Moyenne", immoy);
 	}
+
 
 	cout << endl << "Charger un masque deja calcule ? (O/N)" << endl;
-	key = waitKey(0);
+	key = waitKey();
 	if (key == O_KEY) {
 		cout << "Indiquer le chemin et le nom de l'image :" << endl;
 		string chemin;
 		cin >> chemin;
 		immoy = imread(chemin, CV_LOAD_IMAGE_GRAYSCALE);
+		namedWindow("masque");
+		imshow("masque", masque);
 	}
-
 
 
 ////////////////// ENREGISTREMENT DES IMAGES DANS LES VECTEURS ////////////////////   
@@ -123,22 +129,23 @@ int main(int argc, const char * argv[]) {
 
 
    /////////////////////////////////// PROCESS //////////////////////////////////////////////
+   if (masque.empty()) {
+	   cout << "calcul du masque en cours ..." << endl;
+	   masque = mask_route(M, ImagesG, immoy, Hauteur, Largeur);
+	   cout << "calcul du masque terminé ..." << endl;
 
-   cout << "calcul du masque en cours ..." << endl;
-   masque = mask_route(M, ImagesG, immoy, Hauteur, Largeur);
-   cout << "calcul du masque terminé ..." << endl;
-
-   namedWindow("masque");
-   imshow("masque", masque);
+	   namedWindow("masque");
+	   imshow("masque", masque);
+   }
 
    cout << endl << "Appliquer un traitement au masque ? (O/N)" << endl;
    key = waitKey(0);
 
    if (key == O_KEY) {
 	   cout << endl << "Traitement du masque..." << endl;
-	   morpho(masque, MORPH_CLOSE, 3);
-	   morpho(masque, MORPH_OPEN, 4);
-	   cout << endl << "Traitement terminé." << endl;
+	   morpho(masque, MORPH_CLOSE, 7);
+	   morpho(masque, MORPH_OPEN, 9);
+	   cout << endl << "Traitement termine." << endl;
 	   imshow("masque", masque);
    }
 
@@ -151,7 +158,6 @@ int main(int argc, const char * argv[]) {
    ///////////////////////////////////// PLAY VIDEO //////////////////////////////////////////
 
    // Creating a window to display some images
-   namedWindow("Original video");
    namedWindow("Gray video");
 
    Count = 0;
@@ -165,13 +171,11 @@ int main(int argc, const char * argv[]) {
 	   //key = waitKey(-3);
 	   Count += 1;
    }
-   
 
-   // Destroying all OpenCV windows
-	destroyAllWindows();
+   /////////////   I/O   /////////////
 
 	cout << endl << "Enregistrer l'image moyenne calculée ? (O/N)" << endl;
-	key = waitKey(0);
+	key = waitKey();
 	if (key == O_KEY) {
 		cout << "Indiquer le chemin et le nom de l'image :" << endl;
 		string chemin;
@@ -180,7 +184,7 @@ int main(int argc, const char * argv[]) {
 	}
 
 	cout << endl << "Enregistrer le masque calculé ? (O/N)" << endl;
-	key = waitKey(0);
+	key = waitKey();
 	if (key == O_KEY) {
 		cout << "Indiquer le chemin et le nom de l'image :" << endl;
 		string chemin;
@@ -188,5 +192,12 @@ int main(int argc, const char * argv[]) {
 		imwrite(chemin, masque);
 	}
    
+	cout << endl << "Appuyer sur une touche pour terminer l'application..." << endl;
+	waitKey();
+
+
+
+	// Destroying all OpenCV windows
+	destroyAllWindows();
 	return EXIT_SUCCESS;
 }
