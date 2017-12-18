@@ -127,7 +127,7 @@ int main(int argc, const char * argv[]) {
    if (masque.empty()) {
 	   cout << "calcul du masque en cours ..." << endl;
 	   masque = mask_route(M, ImagesG, immoy, Hauteur, Largeur);
-	   cout << "calcul du masque terminé ..." << endl;
+	   cout << "calcul du masque termine ..." << endl;
 
 	   namedWindow("masque");
 	   imshow("masque", masque);
@@ -146,10 +146,10 @@ int main(int argc, const char * argv[]) {
 	   imshow("masque", masque);
    }
 
+   /////// Extraction de la route /////////
 
-   
-
-
+   extraction(Images, masque);
+   extraction(ImagesG, masque);
 
 
    ///////////////////////////////////// PLAY VIDEO //////////////////////////////////////////

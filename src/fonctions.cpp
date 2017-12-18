@@ -22,7 +22,7 @@ Mat ImageMoyenne(int M, vector<Mat> Video, int hauteur, int largeur) {
 Mat mask_route(int M, vector<Mat> Video, Mat imgMoy, int hauteur, int largeur) {
 	Mat mask = Mat(hauteur, largeur, CV_8UC1);
 	int compteur_route; // Ce compteur sera incrémenté lors du parcours d'images à chaque fois que le niveau du pixel a varié au delà de la plage définie
-	const int val_max_route = M / 5; // Quand compteur_route atteint val_max_route, cela confirme que le pixel appartient à la route.
+	const int val_max_route = M / 10; // Quand compteur_route atteint val_max_route, cela confirme que le pixel appartient à la route.
 
 	for (int i = 0; i < hauteur; i++) {// parcours des pixels en hauteur
 		for (int j = 0; j < largeur; j++) {// parcours des pixels en largeur
@@ -57,7 +57,9 @@ bool extraction(int M, vector<Mat> &Video, Mat mask) {
 	}
 
 	for (int i = 0; i < M; i++) {
-		Video[i].copyTo(Video[i], mask);
+		Mat zero = Mat::zeros(Video[i].size(), Video[i].type());
+		zero.copyTo(Video[i], mask);
+		Video[i] = zero;
 	}
 
 	return true;
