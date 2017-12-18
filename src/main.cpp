@@ -150,7 +150,7 @@ int main(int argc, const char * argv[]) {
    ///////////////////////////////////// PLAY VIDEO //////////////////////////////////////////
 
 
-   cout << endl << "Lire la vidéo ? (O/N)" << endl;
+   cout << endl << "Lire la video ? (O/N)" << endl;
    key = waitKey(0);
    if (key == O_KEY) {
 	   playVideo(fps, Images, ImagesG);
@@ -159,7 +159,7 @@ int main(int argc, const char * argv[]) {
  /////////////////////////////////////// WRITE IMAGES ///////////////////////////////////
 
 
-	cout << endl << "Enregistrer l'image moyenne calculée ? (O/N)" << endl;
+	cout << endl << "Enregistrer l'image moyenne calculee ? (O/N)" << endl;
 	key = waitKey();
 	if (key == O_KEY) {
 		cout << "Indiquer le chemin et le nom de l'image :" << endl;
@@ -168,7 +168,7 @@ int main(int argc, const char * argv[]) {
 		imwrite(chemin, immoy);
 	}
 
-	cout << endl << "Enregistrer le masque calculé ? (O/N)" << endl;
+	cout << endl << "Enregistrer le masque calcule ? (O/N)" << endl;
 	key = waitKey();
 	if (key == O_KEY) {
 		cout << "Indiquer le chemin et le nom de l'image :" << endl;
@@ -177,8 +177,8 @@ int main(int argc, const char * argv[]) {
 		imwrite(chemin, masque);
 	}
 
-	cout << endl << "Appuyer sur une touche pour terminer l'application..." << endl;
-	waitKey();
+	/*cout << endl << "Appuyer sur une touche pour terminer l'application..." << endl;
+	waitKey();*/
 
 
 
