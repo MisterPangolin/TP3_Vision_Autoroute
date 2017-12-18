@@ -22,7 +22,7 @@ Mat ImageMoyenne(int M, vector<Mat> Video, int hauteur, int largeur) {
 Mat mask_route(int M, vector<Mat> Video, Mat imgMoy, int hauteur, int largeur) {
 	Mat mask = Mat(hauteur, largeur, CV_8UC1);
 	int compteur_route; // Ce compteur sera incrémenté lors du parcours d'images à chaque fois que le niveau du pixel a varié au delà de la plage définie
-	const int val_max_route = M / 10; // Quand compteur_route atteint val_max_route, cela confirme que le pixel appartient à la route.
+	const int val_max_route = M / 5; // Quand compteur_route atteint val_max_route, cela confirme que le pixel appartient à la route.
 
 	for (int i = 0; i < hauteur; i++) {// parcours des pixels en hauteur
 		for (int j = 0; j < largeur; j++) {// parcours des pixels en largeur
@@ -30,10 +30,10 @@ Mat mask_route(int M, vector<Mat> Video, Mat imgMoy, int hauteur, int largeur) {
 			
 			int k = 0;
 			while (k < M && compteur_route < val_max_route){// parcours des images
-				int max = imgMoy.at<uchar>(i, j) + 7; // variation minimale que l'on tolère pour définir la route
-				int min = imgMoy.at<uchar>(i, j) - 10; // variation maxmale que l'on tolère pour définir la route
+				int max = imgMoy.at<uchar>(i, j) + 50; // variation minimale que l'on tolère pour définir la route
+				int min = imgMoy.at<uchar>(i, j) - 50; // variation maxmale que l'on tolère pour définir la route
 				int valeur = Video[k].at<uchar>(i, j); // valeur de nuance de gris de la photo
-				if (!(valeur < max && valeur > min)) { // si la valeeur dépasse la variation définie aux lignes précédentes :
+				if (valeur > max || valeur < min) { // si la valeur dépasse la variation définie aux lignes précédentes :
 
 					compteur_route++; // on augmente le compteur
 				}

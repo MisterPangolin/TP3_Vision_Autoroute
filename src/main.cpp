@@ -93,7 +93,7 @@ int main(int argc, const char * argv[]) {
 
 ////////////////// ENREGISTREMENT DES IMAGES DANS LES VECTEURS ////////////////////   
 
-	cout << endl << "Calcul de l'image moyenne..." << endl ;
+	
 
 	//Boucle de lecture et enregistrement de la vidéo et calcul de l'image moyenne 
    int Count = 0; // compteur d'images
@@ -106,7 +106,8 @@ int main(int argc, const char * argv[]) {
 	  cvtColor(im, imGray, CV_BGR2GRAY); // passage en nuances de Gris
 	  ImagesG.push_back(imGray.clone()); // enregistrement du vecteurs d'images en nuances de gris
 
-	  if (Count == M && immoy.empty()) { // on ne calcule l'image moyenne qu'une fois le nombre d'image nécessaire atteint ... merci Captain O
+	  if (Count == M && immoy.empty()) { // on ne calcule l'image moyenne qu'une fois le nombre d'image nécessaire atteint ... Et si elle n'a pas déjà été chargée par l'utilisateur... merci Captain Obvious !
+		  cout << endl << "Calcul de l'image moyenne..." << endl;
 		  immoy = ImageMoyenne(M, ImagesG, Hauteur, Largeur);
 		  imshow("Image Moyenne", immoy);
 	  }
@@ -121,6 +122,8 @@ int main(int argc, const char * argv[]) {
 
 
    /////////////////////////////////// PROCESS //////////////////////////////////////////////
+
+   /////// Calcul du masque //////////
    if (masque.empty()) {
 	   cout << "calcul du masque en cours ..." << endl;
 	   masque = mask_route(M, ImagesG, immoy, Hauteur, Largeur);
@@ -130,6 +133,8 @@ int main(int argc, const char * argv[]) {
 	   imshow("masque", masque);
    }
 
+
+   ////////// Traitement du masque par morphologie //////////
    cout << endl << "Appliquer un traitement au masque ? (O/N)" << endl;
    key = waitKey(0);
 
